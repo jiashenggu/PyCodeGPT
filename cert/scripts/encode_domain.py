@@ -43,7 +43,7 @@ def extract_feature(example: Dict) -> np.ndarray:
 def encode_pycode(input_files: List[str], output_prefix: str, domain: str, type_name: str, tokenizer: PreTrainedTokenizer, logger: logging.Logger, logging_freq: int=10000, rank: int=0):
     logger.info("Process {} start to process {} files:\n{}".format(str(rank), len(input_files), "\n".join(input_files)))
 
-    features = []
+    # features = []
     results = defaultdict(int)
 
     try:
@@ -56,7 +56,7 @@ def encode_pycode(input_files: List[str], output_prefix: str, domain: str, type_
         bos_token_id = tokenizer.bos_token_id if tokenizer.bos_token_id is not None else tokenizer.eos_token_id
         eos_token_id = tokenizer.eos_token_id
 
-        repo_stars = load_githup_stars_dict()
+        # repo_stars = load_githup_stars_dict()
 
         logger.info("Rank {}, tokenizer bos token id = {}, eos token id = {}.".format(rank, bos_token_id, eos_token_id))
 
@@ -66,10 +66,10 @@ def encode_pycode(input_files: List[str], output_prefix: str, domain: str, type_
                 example = json.loads(line)
                 norm_text = example['content']
 
-                if 'stars' not in example:
-                    example['stars'] = repo_stars.get(example['repo_name'], 0)
+                # if 'stars' not in example:
+                #     example['stars'] = repo_stars.get(example['repo_name'], 0)
 
-                example['stars'] = max(0, example['stars'])
+                # example['stars'] = max(0, example['stars'])
 
                 # default feature value
                 if 'feature' not in example:
@@ -114,8 +114,8 @@ def encode_pycode(input_files: List[str], output_prefix: str, domain: str, type_
 
                 results['tokens_in_mb'] += len(input_ids) / 1e6
                 builder.add_item(torch.tensor(input_ids))
-                feature = extract_feature(example)
-                features.append(feature)
+                # feature = extract_feature(example)
+                # features.append(feature)
                 results["cnt_saved"] += 1
 
                 if results["cnt_processed"] % logging_freq == 0:
@@ -123,9 +123,9 @@ def encode_pycode(input_files: List[str], output_prefix: str, domain: str, type_
                         rank, results["cnt_processed"], results["cnt_saved"], ", ".join([f"{k} = {v}" for k, v in results.items()]))
                     )
 
-                    logger.info("Rank {}, sample: feature = {}.".format(
-                        rank, feature.tolist()
-                    ))
+                    # logger.info("Rank {}, sample: feature = {}.".format(
+                    #     rank, feature.tolist()
+                    # ))
 
             except:
                 results["failed"] += 1
@@ -134,12 +134,12 @@ def encode_pycode(input_files: List[str], output_prefix: str, domain: str, type_
         logger.info("Process {} start to finalize dataset ...".format(rank))
 
         builder.finalize(indexed_dataset.index_file_path(output_prefix))
-        features = np.stack(features, axis=0)
-        np.save(output_prefix + "_features.npy", features)
+        # features = np.stack(features, axis=0)
+        # np.save(output_prefix + "_features.npy", features)
 
-        logger.info("Process {} processed all over, {}, avg features = {}.".format(
-            rank, ", ".join([f"{k} = {v}" for k, v in results.items()]), " ".join(map(str, np.mean(features, axis=0).tolist())))
-        )
+        # logger.info("Process {} processed all over, {}, avg features = {}.".format(
+        #     rank, ", ".join([f"{k} = {v}" for k, v in results.items()]), " ".join(map(str, np.mean(features, axis=0).tolist())))
+        # )
 
         results['num_processes'] = 1
         
@@ -193,7 +193,8 @@ def process_main(input_file_path: str, output_dir: str, domain: str, type_name: 
     tokenizer = load_pretrained_tokenizer(tokenizer_name)
     print('load {} {} over, size = {}.'.format(tokenizer.__class__.__name__, tokenizer_name, len(tokenizer)))
 
-    all_input_files = get_files(os.path.join(input_file_path, split_name), "*.json*.gz")
+    # all_input_files = get_files(os.path.join(input_file_path, split_name), "*.json*.gz")
+    all_input_files = get_files(os.path.join(input_file_path, split_name), "*.json*")
     print("Read input files from over, size = {}.".format(len(all_input_files)))
 
     run_with_multiprocessing(

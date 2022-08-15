@@ -23,8 +23,8 @@ def get_logger(path: str=None) -> logging.Logger:
 
     logging.basicConfig(
         level=logging.INFO,
-        force=True,
-        format='%(asctime)s\t%(levelname)  -8s %(message)s',
+        # force=True,
+        format='%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s',
         datefmt='%m-%d %H:%M:%S',
         handlers=handlers
     )

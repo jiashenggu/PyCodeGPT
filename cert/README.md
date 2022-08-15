@@ -98,3 +98,8 @@ If you find our work useful, please cite the paper:
   year={2022}
 }
 ```
+
+step 1: use generate_data.ipynb to generate data 
+step 2: use scripts/run_encode_domain.sh to encode data
+step 3: use scripts/run_training_cert.sh to train CERT
+step 4: use Interacting_with_PyCodeGPT.ipynb to interact with PyCodeGPT

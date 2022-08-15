@@ -3,14 +3,15 @@
 # Licensed under the MIT license.
 
 ID=$(date +"%m%d")
-BASE_DATA_DIR="Your base data directory"
+BASE_DATA_DIR="/home/scruple/NLP/base"
 
 # [Pandas, Numpy]
-DOMAIN="Pandas"
+DOMAIN="NLTK"
 # [normal, sketcher, generator]
-TYPE="generator"
+TYPE="normal"
 # [train, valid]
-SPLIT="valid"
+# SPLIT="valid"
+# SPLIT="train"
 # [True, False]
 IS_DEBUG="False"
 
@@ -18,14 +19,14 @@ IS_DEBUG="False"
 # You should replace the following variables according to your own settings.
 # --------------------------------------------------------------------------
 DATA_DIR="${BASE_DATA_DIR}/datasets/CERT/${DOMAIN}/data"
-MODEL_DIR="${BASE_DATA_DIR}/models/pycodegpt-110M"
+MODEL_DIR="${BASE_DATA_DIR}/models/PyCodeGPT-110M"
 OUTPUT_DIR="${BASE_DATA_DIR}/datasets/CERT/${DOMAIN}/${TYPE}_bin"
 
 if [ ! -z "$AMLT_DATA_DIR" ]; then
     echo "Run experiment on AMLT."
     BASE_DATA_DIR=$AMLT_DATA_DIR
     DATA_DIR="${BASE_DATA_DIR}/CERT/${DOMAIN}/data"
-    MODEL_DIR="${BASE_DATA_DIR}/CERT/pycodegpt-110M"
+    MODEL_DIR="${BASE_DATA_DIR}/CERT/PyCodeGPT-110M"
     OUTPUT_DIR="${BASE_DATA_DIR}/CERT/${DOMAIN}/${TYPE}_bin"
 fi
 
@@ -51,4 +52,6 @@ fi
 
 Args="-i $DATA_DIR -o $OUTPUT_DIR -model $MODEL_DIR -t $N_CPUS -d $DOMAIN -type $TYPE -isdebug $IS_DEBUG"
 echo "Run encode_domain for ${SPLIT} data: $Args"
-python encode_domain.py $Args -split ${SPLIT}
+# python encode_domain.py $Args -split ${SPLIT}
+# python encode_domain.py $Args -split train
+python encode_domain.py $Args -split valid

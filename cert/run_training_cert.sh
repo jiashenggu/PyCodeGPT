@@ -3,25 +3,25 @@
 # Licensed under the MIT license.
 
 # setup for wandb
-export WANDB_PROJECT="CERT"
-export WANDB_API_KEY="Your wandb api key"
+export WANDB_PROJECT="CERT_Flight"
+export WANDB_API_KEY="b95bb1079e3709a8069b5110f2effdaeb47f6415"
 
-BASE_DATA_DIR="Your base data directory"
+BASE_DATA_DIR="/home/scruple/NLP/base"
 if [ ! -z "$AMLT_DATA_DIR" ]; then
     echo "Run experiment on AMLT."
     BASE_DATA_DIR=$AMLT_DATA_DIR
 fi
 
 # [Pandas, Numpy]
-DOMAIN="Pandas"
+DOMAIN="NLTK"
 
 # [normal, sketcher, generator]
-TYPE="generator"
+TYPE="normal"
 
 # ------------------Pandas------# ------Numpy--------------------------------
 # You should replace the following variables according to your own settings.
 # ------------------Pandas------# ------Numpy--------------------------------
-DATA_DIR="${BASE_DATA_DIR}/CERT/${DOMAIN}/${TYPE}_bin"
+DATA_DIR="${BASE_DATA_DIR}/datasets/CERT/${DOMAIN}/${TYPE}_bin"
 
 N_GPUS="1"
 NODE_SIZE="1"
@@ -35,8 +35,8 @@ if [ ! -z "$2" ]; then
 fi
 
 BATCH_SIZE=1 # 24G:7 32G:8 16G:6
-MAX_STEPS=100_000
-BLOCK_SIZE=1024
+MAX_STEPS=100_00
+BLOCK_SIZE=512
 GRAD_ACC_STEPS=2
 WARMUP_STEPS=1_000
 SAVE_STEPS=2_000
@@ -51,11 +51,11 @@ GAS="" #"512K_150K" #default is const
 # --------------------------------------------------------------------------
 # You should replace the following variables according to your own settings.
 # --------------------------------------------------------------------------
-OUTPUT_DIR="${BASE_DATA_DIR}/CERT/${DOMAIN}/experiments/${TYPE}_models"
+OUTPUT_DIR="${BASE_DATA_DIR}/datasets/CERT/${DOMAIN}/experiments/${TYPE}_models"
 CKPT_NAME=""
 
 if [ ! -z "$AMLT_DATA_DIR" ]; then
-    OUTPUT_DIR="$AMLT_DATA_DIR/CERT/${DOMAIN}/experiments/${TYPE}_models"
+    OUTPUT_DIR="$AMLT_DATA_DIR/datasets/CERT/${DOMAIN}/experiments/${TYPE}_models"
     BATCH_SIZE=10
     GRAD_ACC_STEPS=3
 
@@ -111,7 +111,7 @@ Run_Command_Args="$Run_Command_Args --warmup_steps $WARMUP_STEPS"
 Run_Command_Args="$Run_Command_Args --learning_rate $LR"
 Run_Command_Args="$Run_Command_Args --adam_beta2 0.95"
 Run_Command_Args="$Run_Command_Args --lr_scheduler_type cosine"
-Run_Command_Args="$Run_Command_Args --resampling_weights $RS_WEIGHTS"
+# Run_Command_Args="$Run_Command_Args --resampling_weights $RS_WEIGHTS"
 
 Run_Command_Args="$Run_Command_Args --max_steps $MAX_STEPS"
 Run_Command_Args="$Run_Command_Args --per_device_train_batch_size $BATCH_SIZE"
