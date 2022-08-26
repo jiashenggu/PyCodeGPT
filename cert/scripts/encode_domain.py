@@ -221,7 +221,8 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--output_name', type=str, default=None)
     parser.add_argument('-split', '--split_name', type=str, default='valid')
     parser.add_argument('-t', '--num_processes', type=int, default=16)
-    parser.add_argument('-d', '--domain', type=str, default='Pandas', required=True, choices=['Pandas', 'Numpy', 'NLTK'])
+    # parser.add_argument('-d', '--domain', type=str, default='Pandas', required=True, choices=['Pandas', 'Numpy', 'NLTK'])
+    parser.add_argument('-d', '--domain', type=str, default='Pandas', required=True)
     parser.add_argument('-type','--type_name', type=str, default='normal', required=True, choices=['normal', 'sketcher', 'generator'])
     parser.add_argument('-isdebug', '--is_debug', type=str, default='False', choices=['True', 'False'])
 

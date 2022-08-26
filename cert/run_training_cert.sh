@@ -6,14 +6,19 @@
 export WANDB_PROJECT="CERT_Flight"
 export WANDB_API_KEY="b95bb1079e3709a8069b5110f2effdaeb47f6415"
 
-BASE_DATA_DIR="/home/scruple/NLP/base"
+BASE_DATA_DIR="/home/scruple/NLP"
 if [ ! -z "$AMLT_DATA_DIR" ]; then
     echo "Run experiment on AMLT."
     BASE_DATA_DIR=$AMLT_DATA_DIR
 fi
 
 # [Pandas, Numpy]
-DOMAIN="NLTK"
+# DOMAIN="TextEditing"
+# DOMAIN="TextEditing_hisyn"
+# DOMAIN="ASTMatcher"
+# DOMAIN="ASTMatcher_hisyn"
+# DOMAIN="Flight"
+DOMAIN="Flight_hisyn"
 
 # [normal, sketcher, generator]
 TYPE="normal"
@@ -35,11 +40,14 @@ if [ ! -z "$2" ]; then
 fi
 
 BATCH_SIZE=1 # 24G:7 32G:8 16G:6
+# MAX_STEPS=100_000
 MAX_STEPS=100_00
+# BLOCK_SIZE=1024
 BLOCK_SIZE=512
 GRAD_ACC_STEPS=2
 WARMUP_STEPS=1_000
-SAVE_STEPS=2_000
+# SAVE_STEPS=2_000
+SAVE_STEPS=5_000
 
 LR="5e-4"
 WD="0.1"

@@ -184,7 +184,7 @@ def get_files(paths: List[str], pattern=None):
     for input_path in paths:
         if os.path.isdir(input_path):
 
-            sub_files = glob.glob(input_path + "/**/" + pattern, recursive=True)
+            sub_files = glob.glob(input_path + '/'+ pattern, recursive=True)
             sub_files = [f for f in sub_files if not os.path.isdir(f)]
             for sub_file in sub_files:
                 if sub_file not in paths:

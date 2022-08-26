@@ -3,10 +3,15 @@
 # Licensed under the MIT license.
 
 ID=$(date +"%m%d")
-BASE_DATA_DIR="/home/scruple/NLP/base"
+BASE_DATA_DIR="/home/scruple/NLP"
 
-# [Pandas, Numpy]
-DOMAIN="NLTK"
+# [Pandas, Numpy, NLTK]
+# DOMAIN="TextEditing"
+# DOMAIN="TextEditing_hisyn"
+# DOMAIN="ASTMatcher"
+# DOMAIN="ASTMatcher_hisyn"
+# DOMAIN="Flight"
+DOMAIN="Flight_hisyn"
 # [normal, sketcher, generator]
 TYPE="normal"
 # [train, valid]
@@ -53,5 +58,5 @@ fi
 Args="-i $DATA_DIR -o $OUTPUT_DIR -model $MODEL_DIR -t $N_CPUS -d $DOMAIN -type $TYPE -isdebug $IS_DEBUG"
 echo "Run encode_domain for ${SPLIT} data: $Args"
 # python encode_domain.py $Args -split ${SPLIT}
-# python encode_domain.py $Args -split train
+python encode_domain.py $Args -split train
 python encode_domain.py $Args -split valid
